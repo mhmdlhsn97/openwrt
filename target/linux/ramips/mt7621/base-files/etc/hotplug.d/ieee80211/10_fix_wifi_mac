@@ -175,6 +175,13 @@ case "$board" in
 		[ "$PHYNBR" = "1" ] && \
 			macaddr_setbit_la "$(mtd_get_mac_binary Factory 0xe000)" > /sys${DEVPATH}/macaddress
 		;;
+	netis,n6R)
+		hw_mac_addr="$(mtd_get_mac_binary Factory 0x4)"
+		hw_mac_2g="$(mtd_get_mac_binary Factory 0x3ef20)"
+		hw_mac_5g="$(mtd_get_mac_binary Factory 0x3ef26)"
+		[ "$PHYNBR" = "0" ] && echo -n "$hw_mac_2g" > /sys${DEVPATH}/macaddress
+		[ "$PHYNBR" = "1" ] && echo -n "$hw_mac_5g" > /sys${DEVPATH}/macaddress
+		;;
 	yuncore,fap640|\
 	yuncore,fap690)
 		hw_mac_addr="$(mtd_get_mac_binary Factory 0x4)"

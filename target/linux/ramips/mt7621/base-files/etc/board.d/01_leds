@@ -68,7 +68,8 @@ cudy,lt700-outdoor-v1)
 confiabits,mt7621-v1|\
 edup,ep-rt2983|\
 genexis,pulse-ex400|\
-netis,n6)
+netis,n6|\
+netis,n6R)
 	ucidef_set_led_netdev "wan" "wan" "green:wan" "wan" "link tx rx"
 	;;
 cudy,wr2100)

@@ -27,8 +27,23 @@ endef
 
 define Build/append-netis-n6-metadata
 	( echo -ne '{ \
-		"up_model": "Netis-N6R", \
+		"up_model": "Netis-N6", \
 		"supported_devices": ["mt7621-rfb-ax-nand"], \
+		"version": { \
+			"dist": "$(call json_quote,$(VERSION_DIST))", \
+			"version": "$(call json_quote,$(VERSION_NUMBER))", \
+			"revision": "$(call json_quote,$(REVISION))", \
+			"board": "$(call json_quote,$(BOARD))" \
+		} }' \
+	) > $@.metadata.tmp
+	fwtool -I $@.metadata.tmp $@
+	rm $@.metadata.tmp
+endef
+
+define Build/append-netis-n6R-metadata
+	( echo -ne '{ \
+		"up_model": "Netis-n6R", \
+		"supported_devices": ["mt7621-rfb-ax-nor"], \
 		"version": { \
 			"dist": "$(call json_quote,$(VERSION_DIST))", \
 			"version": "$(call json_quote,$(VERSION_NUMBER))", \
@@ -1563,7 +1578,7 @@ define Device/gemtek_wvrtm-1xxacn
   IMAGE_SIZE := 122368k
   DEVICE_VENDOR := Gemtek
   DEVICE_PACKAGES := kmod-gpio-nxp-74hc164 kmod-spi-gpio \
-  kmod-usb3 -uboot-envtools 
+  kmod-usb3 -uboot-envtools
 endef
 
 define Device/gemtek_wvrtm-127acn
@@ -2654,6 +2669,24 @@ define Device/netis_n6
 	kmod-usb3
 endef
 TARGET_DEVICES += netis_n6
+
+define Device/netis_n6R
+  $(Device/dsa-migration)
+  $(Device/uimage-lzma-loader)
+  IMAGE_SIZE := 15808k
+  BLOCKSIZE := 64k
+  DEVICE_VENDOR := netis
+  DEVICE_MODEL := n6R
+  KERNEL_LOADADDR := 0x80001000
+  DEVICE_DTS := mt7621_netis_n6R
+  KERNEL_SIZE := 4096k
+
+  IMAGES += factory.bin sysupgrade.bin
+  IMAGE/sysupgrade.bin := sysupgrade-tar | append-metadata
+  IMAGE/factory.bin := append-kernel | pad-to $$(KERNEL_SIZE) | append-rootfs | pad-rootfs | check-size | append-netis-n6R-metadata
+  DEVICE_PACKAGES += kmod-mt7915e kmod-mt7915-firmware -uboot-envtools luci
+endef
+TARGET_DEVICES += netis_n6R
 
 define Device/netis_wf2881
   $(Device/nand)

@@ -9,7 +9,8 @@ board=$(board_name)
 case "$FIRMWARE" in
 "mediatek/mt7915_eeprom_dbdc.bin")
 	case "$board" in
-	netis,n6)
+	netis,n6|\
+	netis,n6R)
 		EEPROM=/lib/firmware/$FIRMWARE
 		head -c $((0xe00)) /dev/mtd2 > $EEPROM
 		printf "\x92" | \
