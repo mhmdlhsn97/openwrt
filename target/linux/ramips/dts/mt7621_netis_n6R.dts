@@ -124,13 +124,13 @@
 			};
 
 			partition@30000 {
-				label = "Config";
+				label = "config";
 				reg = <0x30000 0x10000>;
 				read-only;
 			};
 
 			partition@50000 {
-				label = "Factory";
+				label = "factory";
 				reg = <0x50000 0x40000>;
 				read-only;
 
@@ -140,7 +140,7 @@
 					#size-cells = <1>;
 
 					eeprom_factory_0: eeprom@0 {
-						reg = <0x0 0xe00>;
+						reg = <0x0 0x1000>;
 					};
 
 					macaddr_factory_4: macaddr@4 {
@@ -190,11 +190,7 @@
 		 *             details.
 		 */
 
-		/*
-		nvmem-cells = <&eeprom_factory_0>;
-		nvmem-cell-names = "eeprom";
-		*/
-
+		firmware-name = "mediatek/mt7915_eeprom_dbdc.bin";
 		mediatek,disable-radar-background;
 	};
 };
