@@ -43,7 +43,7 @@ endef
 define Build/append-netis-n6R-metadata
 	( echo -ne '{ \
 		"up_model": "Netis-n6R", \
-		"supported_devices": ["mt7621-rfb-ax-nor"], \
+		"supported_devices": [ "netis,n6R", "mt7621-rfb-ax-nor"], \
 		"version": { \
 			"dist": "$(call json_quote,$(VERSION_DIST))", \
 			"version": "$(call json_quote,$(VERSION_NUMBER))", \
@@ -2680,9 +2680,9 @@ define Device/netis_n6R
   KERNEL_LOADADDR := 0x80001000
   DEVICE_DTS := mt7621_netis_n6R
   KERNEL_SIZE := 4096k
-
+  IMAGE_FIRSTBOOT := squashfs
   IMAGES += factory.bin sysupgrade.bin
-  IMAGE/sysupgrade.bin := sysupgrade-tar | append-metadata
+  IMAGE/sysupgrade.bin := append-kernel | pad-to $$(KERNEL_SIZE) | append-rootfs | pad-rootfs | check-size | append-netis-n6R-metadata
   IMAGE/factory.bin := append-kernel | pad-to $$(KERNEL_SIZE) | append-rootfs | pad-rootfs | check-size | append-netis-n6R-metadata
   DEVICE_PACKAGES += kmod-mt7915e kmod-mt7915-firmware -uboot-envtools luci
 endef

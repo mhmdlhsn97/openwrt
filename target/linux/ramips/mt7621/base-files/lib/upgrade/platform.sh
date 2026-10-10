@@ -139,7 +139,6 @@ platform_do_upgrade() {
 	netgear,wax202|\
 	netgear,wax214v2|\
 	netis,n6|\
-	netis,n6R|\
 	netis,wf2881|\
 	raisecom,msg1500-x-00|\
 	rostelecom,rt-fe-1a|\

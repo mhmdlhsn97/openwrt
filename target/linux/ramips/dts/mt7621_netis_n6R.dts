@@ -51,10 +51,8 @@
 
 		led-0 {
 			color = <LED_COLOR_ID_GREEN>;
-			function = LED_FUNCTION_USB;
+			function = LED_FUNCTION_LAN;
 			gpios = <&gpio 4 GPIO_ACTIVE_LOW>;
-			trigger-sources = <&xhci_ehci_port1>;
-			linux,default-trigger = "usbport";
 		};
 
 		led-1 {
@@ -124,13 +122,13 @@
 			};
 
 			partition@30000 {
-				label = "config";
+				label = "Config";
 				reg = <0x30000 0x10000>;
 				read-only;
 			};
 
 			partition@50000 {
-				label = "factory";
+				label = "Factory";
 				reg = <0x50000 0x40000>;
 				read-only;
 
