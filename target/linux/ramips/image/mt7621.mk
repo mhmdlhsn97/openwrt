@@ -44,6 +44,8 @@ define Build/append-netis-n6R-metadata
 	( echo -ne '{ \
 		"up_model": "Netis-n6R", \
 		"supported_devices": [ "netis,n6R", "mt7621-rfb-ax-nor"], \
+    "new_supported_devices": [ "netis,n6R", "mt7621-rfb-ax-nor" ], \
+    "compat_version": "1.1", \
 		"version": { \
 			"dist": "$(call json_quote,$(VERSION_DIST))", \
 			"version": "$(call json_quote,$(VERSION_NUMBER))", \
